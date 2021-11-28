@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Dime Test</title>
+
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+            background-color: white;
+            margin-bottom: 50px;
+        }
+
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .content{
+            position: relative;
+            width:75%;
+            min-height: 80vh;
+            display: grid;
+            place-items: center;
+        }
+
+        .content > div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+        }
+
+        .content > div img,
+        .content > div h1,
+        .content > div p{
+            opacity: 0;
+            margin-top: 50px;
+        }
+
+        div.start img,
+        div.start h1,
+        div.start p
+        {
+            animation-name: reveal;
+            animation-duration: 0.8s;
+            animation-fill-mode: forwards;
+        }
+
+        div.start .text-div p{
+            animation-delay: 0.1s;
+        }
+
+        .content > div img{
+            width:50%;
+        }
+
+        .listener-div{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width:50%;
+        }
+
+        .listener-div > .listener{
+            width:50px;
+            height:50px;
+            border-radius: 50px;
+            background-color: aquamarine;
+        }
+
+        
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                margin-top:50px;
+            }
+            to {
+                opacity: 1;
+                margin-top:0;
+            }
+          }
+
+          @keyframes hide {
+            from {
+                opacity: 50%;
+                margin-top:0px;
+            }
+            to {
+                opacity: 0;
+                margin-top:50px;
+            }
+          }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="div-1 visible">
+                <img src="gif2.gif" alt="">
+                <div class="text-div">
+                    <h1>This in Div-1</h1>
+                    <p>A sub text for Div-1</p>
+                </div>
+            </div>
+            <div class="div-2">
+                <img src="gif3.gif" alt="">
+                <div class="text-div">
+                    <h1>This in Div-2</h1>
+                    <p>A sub text for Div-2</p>
+                </div>
+            </div>
+            <div class="div-3">
+                <img src="gif4.gif" alt="">
+                <div class="text-div">
+                    <h1>This in Div-3</h1>
+                    <p>A sub text for Div-3</p>
+                </div>
+            </div>
+            <div class="div-4">
+                <img src="gif5.gif" alt="">
+                <div class="text-div">
+                    <h1>This in Div-4</h1>
+                    <p>A sub text for Div-4</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="listener-div">
+            <div class="listener listener-1" data-target="div-1"></div>
+            <div class="listener listener-2" data-target="div-2"></div>
+            <div class="listener listener-3" data-target="div-3"></div>
+            <div class="listener listener-4" data-target="div-4"></div>
+        </div>
+    </div>
+    <script>
+
+        var listenerElements = document.querySelectorAll(".listener-div .listener");
+
+        function startAnimation(event){
+                var targetName = event.target.dataset.target;
+                let targetElement = document.querySelectorAll("."+event.target.dataset.target)
+                targetElement[0].classList.add('start');   
+        }
+
+        async function endAnimation(event){
+            let targetName = await event.target.dataset.target;
+            let targetElement = await document.querySelectorAll("."+event.target.dataset.target)
+            targetElement[0].classList.remove('start');
+            console.log("CALLED");
+        }
+
+        
+        for(var i = 0;i<listenerElements.length;i++){
+
+            listenerElements[i].addEventListener("mouseenter",(event)=>startAnimation(event))
+            listenerElements[i].addEventListener("mouseleave",(event)=>endAnimation(event))
+
+        }
+    </script>
+</body>
+</html>
