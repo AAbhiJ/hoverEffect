@@ -143,6 +143,7 @@
             <div class="listener listener-4" data-target="div-4"></div>
         </div>
     </div>
+    <h1>HEY</h1>
     <script>
 
         var listenerElements = document.querySelectorAll(".listener-div .listener");
@@ -157,16 +158,29 @@
             let targetName = await event.target.dataset.target;
             let targetElement = await document.querySelectorAll("."+event.target.dataset.target)
             targetElement[0].classList.remove('start');
-            console.log("CALLED");
         }
+
+        function addanimation(event){
+            var targetName = event.target.dataset.target;
+            let targetElement = document.querySelectorAll("."+event.target.dataset.target)
+            let classes = targetElement[0].classList;
+            if(classes.value.includes('start')){
+                targetElement[0].classList.remove('start');
+            }
+            else{
+                targetElement[0].classList.add('start');   
+            }
+        }
+
 
         
         for(var i = 0;i<listenerElements.length;i++){
-
             listenerElements[i].addEventListener("mouseenter",(event)=>startAnimation(event))
             listenerElements[i].addEventListener("mouseleave",(event)=>endAnimation(event))
-
+            listenerElements[i].addEventListener("click",(event)=>addanimation(event))
         }
     </script>
+
+
 </body>
 </html>
